@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: akshay4444/workbench:chainlit-v1
-  tag: latest
+  repository: akshay4444/workbench
+  tag: chainlit-v1
   pullPolicy: Always
 
 service:
