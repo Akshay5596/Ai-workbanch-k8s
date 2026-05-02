@@ -35,15 +35,14 @@ spec:
               mountPath: /data
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-    volumeClaimTemplates:
-      - metadata:
-          name: vector-db-data
-          labels:
-            app.kubernetes.io/name: vector-db
-        spec:
-          accessModes:
-  {{ toYaml .Values.persistence.accessModes | indent 10 }}
-          storageClassName: {{ .Values.persistence.storageClassName | quote }}
-          resources:
-            requests:
-              storage: {{ .Values.persistence.size }}
+  volumeClaimTemplates:
+    - metadata:
+        name: grapg-db-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+{{- if .Values.persistence.storageClassName }}
+        storageClassName: {{ .Values.persistence.storageClassName | quote }}
+{{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
