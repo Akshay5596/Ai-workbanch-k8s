@@ -1,0 +1,6 @@
+apiVersion: v2
+name: chainlit
+description: Chainlit AI DevOps Assistant application
+type: application
+version: 0.1.0
+appVersion: "latest"

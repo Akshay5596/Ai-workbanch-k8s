@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainlit
+  labels:
+    app.kubernetes.io/name: chainlit
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app.kubernetes.io/name: chainlit
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: http

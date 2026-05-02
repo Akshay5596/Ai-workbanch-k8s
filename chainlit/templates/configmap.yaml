@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chainlit-config
+  labels:
+    app.kubernetes.io/name: chainlit
+data:
+  DB_HOST: {{ .Values.config.dbHost | quote }}
+  DB_NAME: {{ .Values.config.dbName | quote }}
+  OLLAMA_URL: {{ .Values.config.ollamaUrl | quote }}
+  NEO4J_URI: {{ .Values.config.neo4jUri | quote }}
+  LANGFUSE_HOST: {{ .Values.config.langfuseHost | quote }}
+  LLM_MODEL: {{ .Values.config.llmModel | quote }}
+  EMBEDDING_MODEL: {{ .Values.config.embeddingModel | quote }}

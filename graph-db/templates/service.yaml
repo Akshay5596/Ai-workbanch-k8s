@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: graph-db
+  labels:
+    app.kubernetes.io/name: graph-db
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: graph-db
+ports:
+  - name: http
+    port: {{ .Values.service.uiPort }}
+    targetPort: 7474
+  - name: bolt
+    port: {{ .Values.service.boltPort }}
+    targetPort: 7687

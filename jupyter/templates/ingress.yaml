@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jupyter
+  labels:
+    app.kubernetes.io/name: jupyter
+  annotations:
+    alb.ingress.kubernetes.io/scheme: {{ .Values.ingress.scheme | default "internet-facing" | quote }}
+    alb.ingress.kubernetes.io/target-type: {{ .Values.ingress.targetType | default "ip" | quote }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.ingress.healthcheckPath | default "/" | quote }}
+spec:
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jupyter
+                port:
+                  number: {{ .Values.service.port }}
+{{- end }}

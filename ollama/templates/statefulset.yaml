@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ollama
+  labels:
+    app.kubernetes.io/name: ollama
+spec:
+  serviceName: ollama
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ollama
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ollama
+    spec:
+      containers:
+        - name: ollama
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 11434
+          env:
+            - name: OLLAMA_HOST
+              value: "0.0.0.0"
+          volumeMounts:
+            - name: ollama-models
+              mountPath: /root/.ollama
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: ollama-models
+      spec:
+        accessModes: ["ReadWriteOnce"]
+{{- if .Values.persistence.storageClassName }}
+        storageClassName: {{ .Values.persistence.storageClassName | quote }}
+{{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}

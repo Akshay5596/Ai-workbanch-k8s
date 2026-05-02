@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chainlit
+  labels:
+    app.kubernetes.io/name: chainlit
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: chainlit
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: chainlit
+    spec:
+      containers:
+        - name: chainlit
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+          envFrom:
+            - configMapRef:
+                name: chainlit-config
+            - secretRef:
+                name: chainlit-secret
+          resources:
+{{ toYaml .Values.resources | indent 12 }}

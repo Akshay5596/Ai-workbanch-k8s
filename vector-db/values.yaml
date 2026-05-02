@@ -1,0 +1,19 @@
+image:
+  repository: ankane/pgvector
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 5432
+
+postgres:
+  user: postgres
+  password: postgres
+  database: ragdb
+
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClassName: ""
+
+resources: {}

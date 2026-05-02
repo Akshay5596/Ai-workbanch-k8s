@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vector-db
+  labels:
+    app.kubernetes.io/name: vector-db
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: vector-db
+  ports:
+    - name: postgres
+      port: {{ .Values.service.port }}
+      targetPort: postgres

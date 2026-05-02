@@ -1,0 +1,37 @@
+replicaCount: 1
+
+image:
+  repository: akshay4444/workbench:chainlit-v1
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8501
+
+ingress:
+  enabled: true
+  className: alb
+  host: chainlit.unboxitsolutions.in
+  scheme: internet-facing
+  targetType: ip
+
+config:
+  dbHost: vector-db
+  dbName: ragdb
+  ollamaUrl: http://ollama:11434
+  neo4jUri: bolt://graph-db:7687
+  langfuseHost: http://98.87.12.105:3000
+  llmModel: tinyllama
+  embeddingModel: nomic-embed-text
+
+secret:
+  dbUser: postgres
+  dbPassword: postgres
+  neo4jUser: neo4j
+  neo4jPassword: password
+  langfusePublicKey: pk-lf-17e23db4-73b9-4d2a-a8a1-b37b2dd6b6f2
+  langfuseSecretKey: sk-lf-9355cf0f-d6cc-46cd-a86a-d6f15a9683e6
+
+resources: {}

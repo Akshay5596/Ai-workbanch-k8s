@@ -1,0 +1,39 @@
+replicaCount: 1
+
+image:
+  repository: jupyter/base-notebook
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8888
+  targetPort: 8888
+
+ingress:
+  enabled: false
+  className: alb
+  host: jupyter.unboxitsolutions.in
+  scheme: internet-facing
+  targetType: ip
+  healthcheckPath: /
+
+persistence:
+  enabled: true
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
+  mountPath: /home/jovyan/work
+
+jupyter:
+  token: ""
+  allowRoot: false
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

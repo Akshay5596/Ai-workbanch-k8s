@@ -1,0 +1,31 @@
+replicaCount: 1
+
+image:
+  repository: neo4j
+  tag: "5"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  uiPort: 7474
+  boltPort: 7687
+
+neo4j:
+  user: neo4j
+  password: password
+  auth: neo4j/password
+
+persistence:
+  enabled: true
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

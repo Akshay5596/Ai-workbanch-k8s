@@ -1,0 +1,31 @@
+{{- if .Values.models.pullOnInstall }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ollama-model-pull
+  labels:
+    app.kubernetes.io/name: ollama
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: pull-models
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+            - name: OLLAMA_HOST
+              value: "http://ollama:11434"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Waiting for Ollama..."
+              until ollama list >/dev/null 2>&1; do sleep 5; done
+              {{- range .Values.models.list }}
+              echo "Pulling {{ . }}"
+              ollama pull {{ . }}
+              {{- end }}
+{{- end }}
