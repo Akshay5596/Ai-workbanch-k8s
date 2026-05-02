@@ -20,7 +20,7 @@ ingress:
 
 persistence:
   enabled: true
-  storageClassName: ""
+  storageClassName: gp3
   accessModes:
     - ReadWriteOnce
   size: 5Gi
