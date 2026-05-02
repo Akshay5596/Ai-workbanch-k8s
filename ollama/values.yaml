@@ -8,10 +8,11 @@ service:
 
 persistence:
   enabled: true
-  storageClassName: gp2
+  storageClassName: auto-ebs-sc
   accessModes:
     - ReadWriteOnce
-  size: 20Gi
+  size: 5Gi
+  mountPath: /home/jovyan/work
 
 models:
   pullOnInstall: true

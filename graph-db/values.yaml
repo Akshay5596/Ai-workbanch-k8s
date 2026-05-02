@@ -17,7 +17,7 @@ neo4j:
 
 persistence:
   enabled: true
-  storageClassName: gp3
+  storageClassName: auto-ebs-sc
   accessModes:
     - ReadWriteOnce
   size: 10Gi

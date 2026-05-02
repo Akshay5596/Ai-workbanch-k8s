@@ -13,7 +13,7 @@ postgres:
 
 persistence:
   enabled: true
-  storageClassName: gp2
+  storageClassName: auto-ebs-sc
   accessModes:
     - ReadWriteOnce
   size: 10Gi
