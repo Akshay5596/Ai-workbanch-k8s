@@ -1,6 +1,0 @@
-apiVersion: v2
-name: jupyter
-description: Jupyter Notebook for AI Workbench data ingestion
-type: application
-version: 0.1.0
-appVersion: "latest"
