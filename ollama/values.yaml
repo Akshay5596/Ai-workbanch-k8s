@@ -8,8 +8,10 @@ service:
 
 persistence:
   enabled: true
+  storageClassName: gp2
+  accessModes:
+    - ReadWriteOnce
   size: 20Gi
-  storageClassName: ""
 
 models:
   pullOnInstall: true

@@ -17,7 +17,7 @@ neo4j:
 
 persistence:
   enabled: true
-  storageClassName: ""
+  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   size: 10Gi
