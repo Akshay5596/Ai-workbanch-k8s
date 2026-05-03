@@ -25,6 +25,9 @@ spec:
           envFrom:
             - secretRef:
                 name: vector-db-secret
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: vector-db-data
               mountPath: /var/lib/postgresql/data
@@ -33,6 +36,8 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: vector-db-data
+        labels:
+          app.kubernetes.io/name: vector-db
       spec:
         accessModes: ["ReadWriteOnce"]
 {{- if .Values.persistence.storageClassName }}
