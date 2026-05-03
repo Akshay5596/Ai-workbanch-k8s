@@ -2,14 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jupyter
+  name: chainlit
   labels:
-    app.kubernetes.io/name: jupyter
+    app.kubernetes.io/name: chainlit
   annotations:
-    alb.ingress.kubernetes.io/scheme: {{ .Values.ingress.scheme | default "internet-facing" | quote }}
-    alb.ingress.kubernetes.io/target-type: {{ .Values.ingress.targetType | default "ip" | quote }}
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
-    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.ingress.healthcheckPath | default "/" | quote }}
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
 spec:
   ingressClassName: {{ .Values.ingress.className | quote }}
   rules:
@@ -20,7 +19,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: jupyter
+                name: chainlit
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}
