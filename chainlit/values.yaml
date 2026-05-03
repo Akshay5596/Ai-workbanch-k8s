@@ -12,7 +12,7 @@ service:
 
 ingress:
   enabled: true
-  className: alb
+  className: nginx
   host: chainlit.unboxitsolutions.in
   scheme: internet-facing
   targetType: ip

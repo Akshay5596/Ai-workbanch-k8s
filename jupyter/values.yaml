@@ -11,8 +11,8 @@ service:
   targetPort: 8888
 
 ingress:
-  enabled: false
-  className: alb
+  enabled: true
+  className: nginx
   host: jupyter.unboxitsolutions.in
   scheme: internet-facing
   targetType: ip
