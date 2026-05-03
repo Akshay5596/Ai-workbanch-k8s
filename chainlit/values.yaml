@@ -22,7 +22,7 @@ config:
   dbName: ragdb
   ollamaUrl: http://ollama:11434
   neo4jUri: bolt://graph-db:7687
-  langfuseHost: http://98.87.12.105:3000
+  langfuseHost: http://54.225.144.31:3000
   llmModel: tinyllama
   embeddingModel: nomic-embed-text
 
