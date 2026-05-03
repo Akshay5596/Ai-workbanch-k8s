@@ -5,13 +5,15 @@ metadata:
   labels:
     app.kubernetes.io/name: graph-db
 spec:
-  type: ClusterIP
+  type: {{ .Values.service.type }}
   selector:
     app.kubernetes.io/name: graph-db
-ports:
-  - name: http
-    port: {{ .Values.service.uiPort }}
-    targetPort: 7474
-  - name: bolt
-    port: {{ .Values.service.boltPort }}
-    targetPort: 7687
+  ports:
+    - name: neo4j-ui
+      port: {{ .Values.service.uiPort }}
+      targetPort: 7474
+      protocol: TCP
+    - name: bolt
+      port: {{ .Values.service.boltPort }}
+      targetPort: 7687
+      protocol: TCP

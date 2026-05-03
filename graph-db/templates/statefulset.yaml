@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: graph-db
 spec:
   serviceName: graph-db
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: graph-db
@@ -37,12 +37,13 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
   volumeClaimTemplates:
     - metadata:
-        name: grapg-db-data
+        name: graph-db-data
+        labels:
+          app.kubernetes.io/name: graph-db
       spec:
-        accessModes: ["ReadWriteOnce"]
-{{- if .Values.persistence.storageClassName }}
+        accessModes:
+{{ toYaml .Values.persistence.accessModes | indent 10 }}
         storageClassName: {{ .Values.persistence.storageClassName | quote }}
-{{- end }}
         resources:
           requests:
             storage: {{ .Values.persistence.size }}
