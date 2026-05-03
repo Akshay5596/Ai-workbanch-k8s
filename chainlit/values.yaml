@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: akshay4444/workbench
-  tag: chainlit-v2
+  tag: chainlit-v3
   pullPolicy: Always
 
 service:
