@@ -14,24 +14,24 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: vector-db
-    spec:
-      containers:
-        - name: vector-db
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: postgres
-              containerPort: 5432
-          envFrom:
-            - secretRef:
-                name: vector-db-secret
-          env:
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
-          volumeMounts:
-            - name: vector-db-data
-              mountPath: /var/lib/postgresql/data
-          resources:
+    containers:
+      - name: vector-db
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: postgres
+            containerPort: 5432
+        envFrom:
+          - secretRef:
+              name: vector-db-secret
+        env:
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+        volumeMounts:
+          - name: vector-db-data
+            mountPath: /var/lib/postgresql/data
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
 {{ toYaml .Values.resources | indent 12 }}
   volumeClaimTemplates:
     - metadata:
