@@ -29,6 +29,9 @@ persistence:
 jupyter:
   token: ""
   allowRoot: false
+  port: 8888
+  ip: 0.0.0.0
+  allowOrigin: "*"
 
 resources: {}
 

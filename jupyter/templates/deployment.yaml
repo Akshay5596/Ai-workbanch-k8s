@@ -14,6 +14,7 @@ spec:
       labels:
         app.kubernetes.io/name: jupyter
     spec:
+      enableServiceLinks: false
       containers:
         - name: jupyter
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -24,6 +25,12 @@ spec:
             - start-notebook.sh
           args:
             - "--NotebookApp.token={{ .Values.jupyter.token }}"
+            - "--ServerApp.port=8888"
+            - "--ServerApp.ip=0.0.0.0"
+            - "--ServerApp.allow_origin=*"
+          env:
+            - name: JUPYTER_PORT
+              value: "8888"
           volumeMounts:
             - name: jupyter-work
               mountPath: {{ .Values.persistence.mountPath }}
