@@ -14,24 +14,24 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: vector-db
-    containers:
-      - name: vector-db
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-          - name: postgres
-            containerPort: 5432
-        envFrom:
-          - secretRef:
-              name: vector-db-secret
-        env:
-          - name: PGDATA
-            value: /var/lib/postgresql/data/pgdata
-        volumeMounts:
-          - name: vector-db-data
-            mountPath: /var/lib/postgresql/data
-        resources:
-{{ toYaml .Values.resources | indent 12 }}
+    spec:
+      containers:
+        - name: vector-db
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: postgres
+              containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: vector-db-secret
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: vector-db-data
+              mountPath: /var/lib/postgresql/data
+          resources:
 {{ toYaml .Values.resources | indent 12 }}
   volumeClaimTemplates:
     - metadata:
@@ -39,10 +39,11 @@ spec:
         labels:
           app.kubernetes.io/name: vector-db
       spec:
-        accessModes: ["ReadWriteOnce"]
+        accessModes:
+          - ReadWriteOnce
 {{- if .Values.persistence.storageClassName }}
         storageClassName: {{ .Values.persistence.storageClassName | quote }}
 {{- end }}
         resources:
           requests:
-            storage: {{ .Values.persistence.size }}
+            storage: {{ .Values.persistence.size | quote }}
